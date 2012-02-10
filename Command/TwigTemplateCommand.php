@@ -1,6 +1,6 @@
 <?php
 
-namespace Sf2gen\ClearCacheBundle\Command;
+namespace Sf2gen\Bundle\ClearCacheBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputOption;
