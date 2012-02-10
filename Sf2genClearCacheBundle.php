@@ -1,6 +1,6 @@
 <?php
 
-namespace Sf2gen\ClearCacheBundle;
+namespace Sf2gen\Bundle\ClearCacheBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
