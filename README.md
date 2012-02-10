@@ -41,7 +41,7 @@ Installation
 
             if (in_array($this->getEnvironment(), array('dev', 'test'))) {
                 // previous bundles like WebProfilerBundle
-                $bundles[] = new Sf2gen\Bundle\ConsoleBundle\Sf2genClearCacheBundle();
+                $bundles[] = new Sf2gen\Bundle\ClearCacheBundle\Sf2genClearCacheBundle();
             }
 
             return $bundles;
