@@ -3,22 +3,28 @@
 namespace Sf2gen\Bundle\ClearCacheBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Finder\Finder;
 
 abstract class ClearCacheCommand extends ContainerAwareCommand
 {
     protected function clearCacheFile($env, $cachePath, $cacheFile, $inputArgument)
     {
-        $message = '';
-        
-        $target = $this->getContainer()->getParameter('kernel.root_dir') . '/cache/' . $env . '/' . $cachePath . '/' . $cacheFile;
-        if (is_file($target)) {
-            if(unlink($target)){
-                $message = '["%s"] "%s" cleared. ["%s"]';
-            }else{
-                $message = '["%s"] "%s" can not be deleted. ["%s"]';
-            }
+        $message = sprintf("Environnement '%s' with '%s':\n\n", $env, $inputArgument);
+
+        $finder = new Finder();
+        $finder->files()->in($this->getContainer()->getParameter('kernel.root_dir') . '/cache/' . $env . '/' . $cachePath . '/')
+                        ->name($cacheFile);
+
+        if (iterator_count($finder) == 0) {
+            $message .= sprintf("'%s' does not exist.\n", $cacheFile);
         }else{
-            $message = '["%s"] "%s" does not exist. ["%s"]';
+            foreach ($finder as $file) {
+                if(unlink($file->getRealpath())){
+                    $message .= sprintf("'%s' cleared.\n", $file->getFilename());
+                }else{
+                    $message .= sprintf("'%s' can not be deleted.\n", $file->getFilename());
+                }
+            }
         }
         
         return sprintf($message, $env, $cacheFile, $inputArgument);
