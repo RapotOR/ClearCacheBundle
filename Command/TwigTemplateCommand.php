@@ -2,13 +2,12 @@
 
 namespace Sf2gen\Bundle\ClearCacheBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class TwigTemplateCommand extends ContainerAwareCommand
+class TwigTemplateCommand extends ClearCacheCommand
 {
     protected function configure()
     {
@@ -40,15 +39,6 @@ class TwigTemplateCommand extends ContainerAwareCommand
         $twigEnvironnement = $this->getContainer()->get('twig');
         $twigCache = substr($twigEnvironnement->getCacheFilename($template),strlen($twigEnvironnement->getCache()));
         
-        $target = $this->getContainer()->getParameter('kernel.root_dir') . '/cache/'.$options['target-env'].'/twig' .  $twigCache;
-        if (is_file($target)) {
-            if(unlink($target)){
-                $output->writeln(sprintf('["%s"] "%s" cleared. ["%s"]', $options['target-env'], $twigCache, $template));
-            }else{
-                $output->writeln(sprintf('["%s"] "%s" can not be deleted. ["%s"]', $options['target-env'], $twigCache, $template));
-            }
-        }else{
-            $output->writeln(sprintf('["%s"] "%s" does not exist. ["%s"]', $options['target-env'], $twigCache, $template));
-        }        
+        $output->writeln($this->clearCacheFile($options['target-env'], 'twig', $twigCache, $template));       
     }
 }
