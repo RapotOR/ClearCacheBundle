@@ -8,12 +8,16 @@ So, clearing the whole cache for modifying few things is too much!
 Supported bundles
 =================
 
-  * TwigBundle
+  * Templates
+  * Annotations for actions in controllers
+  * Annotations for entities
 
 Use it
 ======
 
     php app/console cache:clear:twig MyBundle::layout.html.twig
+    php app/console cache:clear:controller MyBundle:Demo:view
+    php app/console cache:clear:entity MyBundle:User
 
 Installation
 ============
