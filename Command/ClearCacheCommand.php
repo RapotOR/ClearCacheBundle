@@ -16,13 +16,13 @@ abstract class ClearCacheCommand extends ContainerAwareCommand
                         ->name($cacheFile);
 
         if (iterator_count($finder) == 0) {
-            $message .= sprintf("'%s' does not exist.\n", $cacheFile);
+            $message .= sprintf("'%s' does not exist.\n", $cachePath . '/' . $cacheFile);
         }else{
             foreach ($finder as $file) {
                 if(unlink($file->getRealpath())){
-                    $message .= sprintf("'%s' cleared.\n", $file->getFilename());
+                    $message .= sprintf("'%s' cleared.\n", $cachePath . '/' . $file->getFilename());
                 }else{
-                    $message .= sprintf("'%s' can not be deleted.\n", $file->getFilename());
+                    $message .= sprintf("'%s' can not be deleted.\n", $cachePath . '/' . $file->getFilename());
                 }
             }
         }

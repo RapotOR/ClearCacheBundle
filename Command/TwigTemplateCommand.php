@@ -39,6 +39,8 @@ class TwigTemplateCommand extends ClearCacheCommand
         $twigEnvironnement = $this->getContainer()->get('twig');
         $twigCache = substr($twigEnvironnement->getCacheFilename($template),strlen($twigEnvironnement->getCache()));
         
-        $output->writeln($this->clearCacheFile($options['target-env'], 'twig', $twigCache, $template));       
+        $twigCacheParts = pathinfo($twigCache);
+        
+        $output->writeln($this->clearCacheFile($options['target-env'], 'twig'.$twigCacheParts['dirname'] , $twigCacheParts['basename'], $template));       
     }
 }
